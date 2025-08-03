@@ -31,30 +31,6 @@ export interface Review {
   date: string
 }
 
-export interface ContactInfo {
-  email: string
-  phone: string
-  address: {
-    street: string
-    city: string
-    postalCode: string
-    country: string
-  }
-  socialMedia: {
-    facebook?: string
-    instagram?: string
-    twitter?: string
-  }
-}
-
-export interface OpeningHours {
-  [key: string]: {
-    open: string
-    close: string
-    closed?: boolean
-  }
-}
-
 export interface NavigationItem {
   label: string
   href: string

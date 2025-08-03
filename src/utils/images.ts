@@ -49,13 +49,6 @@ export const IMAGES = {
     ogImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=630&fit=crop&auto=format',
   },
 
-  // Images placeholders alternatives
-  placeholders: {
-    sport1: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&auto=format',
-    sport2: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&h=400&fit=crop&auto=format',
-    food1: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop&auto=format',
-    food2: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=600&h=400&fit=crop&auto=format',
-  }
 }
 
 // Helper pour récupérer une image avec des paramètres personnalisés

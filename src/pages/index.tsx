@@ -31,7 +31,7 @@ const HomePage: React.FC = () => {
               "@context": "https://schema.org",
               "@type": "Restaurant",
               "name": "Le Ravito",
-              "image": "/logo.png",
+              "image": "https://leravito.fr/favicon.svg",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "33 rue Molière",

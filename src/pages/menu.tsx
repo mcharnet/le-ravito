@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import { Star, Filter, ShoppingCart } from 'lucide-react'
+import { Filter, ShoppingCart } from 'lucide-react'
 import type { MenuItem } from '@/types'
 import { MENU_IMAGES } from '@/utils/images'
 
