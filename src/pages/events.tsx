@@ -96,7 +96,7 @@ const categories = [
 ]
 
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
-  const isFullyBooked = event.maxParticipants && event.registeredParticipants >= event.maxParticipants
+  const isFullyBooked = Boolean(event.maxParticipants && event.registeredParticipants >= event.maxParticipants)
   const availableSpots = event.maxParticipants ? event.maxParticipants - event.registeredParticipants : null
 
   const handleRegister = () => {
