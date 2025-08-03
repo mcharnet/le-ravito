@@ -10,37 +10,38 @@ export const IMAGES = {
 
   // Images Story Section
   story: {
-    main: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    main: 'https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    local: 'https://images.unsplash.com/photo-1602533848722-1babfd923475?q=80&w=2225&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
 
   // Images Menu Items
   menu: {
     smoothieBowl: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=600&h=400&fit=crop&auto=format',
     sandwich: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&h=400&fit=crop&auto=format',
-    energyBalls: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=600&h=400&fit=crop&auto=format',
+    energyBalls: 'https://images.unsplash.com/photo-1728238319028-a2ae0d43cff0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGVuZXJneSUyMGJhbGxzfGVufDB8MHwwfHx8Mg%3D%3D',
     greenJuice: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=600&h=400&fit=crop&auto=format',
     quinoaSalad: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop&auto=format',
     proteinCoffee: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&h=400&fit=crop&auto=format',
     chiaPudding: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop&auto=format',
-    wrap: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=600&h=400&fit=crop&auto=format',
+    wrap: 'https://images.unsplash.com/photo-1636044988130-d97aad86426c?q=80&w=1771&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
 
   // Images Événements
   events: {
-    morningRun: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&auto=format',
-    nutritionWorkshop: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop&auto=format',
-    bikeRide: 'https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=600&h=400&fit=crop&auto=format',
-    clubMeeting: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=400&fit=crop&auto=format',
-    trailRunning: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop&auto=format',
-    smoothieWorkshop: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&h=400&fit=crop&auto=format',
+    morningRun: 'https://images.unsplash.com/photo-1477332552946-cfb384aeaf1c?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    nutritionWorkshop: 'https://images.unsplash.com/photo-1591189863430-ab87e120f312?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    bikeRide: 'https://images.unsplash.com/photo-1699389359830-7b49eac067ad?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    clubMeeting: 'https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    trailRunning: 'https://images.unsplash.com/photo-1456613820599-bfe244172af5?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dHJhaWwlMjBydW5uaW5nfGVufDB8MHwwfHx8Mg%3D%3D',
+    smoothieWorkshop: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c21vb3RoaWV8ZW58MHwwfDB8fHwy',
   },
 
   // Images Page Notre Histoire
   about: {
-    team: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop&auto=format',
-    member1: 'https://images.unsplash.com/photo-1494790108755-2616b15734a7?w=300&h=300&fit=crop&auto=format',
+    team: 'https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    member1: 'https://media.licdn.com/dms/image/v2/D4E03AQG_wJK8Mr25VA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1690183387646?e=2147483647&v=beta&t=_fRc_QDBOBguvdc4cHJRhjdCoatpX3yZKuwHIpRT6yw',
+    member3: 'https://media.licdn.com/dms/image/v2/C4E03AQHBUzsVo1BGxA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1552992350499?e=2147483647&v=beta&t=OzRW8tqrbbNONxf-X6XshiAqy7VME_8977A5K4l2Ops',
     member2: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&auto=format',
-    member3: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&auto=format',
   },
 
   // Images Meta (Open Graph, Twitter)

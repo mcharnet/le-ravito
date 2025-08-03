@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Users, Leaf, Award, Heart } from 'lucide-react'
-import { ABOUT_IMAGES } from '@/utils/images'
+import { ABOUT_IMAGES, STORY_IMAGES } from '@/utils/images'
 
 const NotreHistoirePage: React.FC = () => {
   const values = [
@@ -36,23 +36,23 @@ const NotreHistoirePage: React.FC = () => {
 
   const team = [
     {
-      name: 'Marie Dubois',
-      role: 'Fondatrice & Nutritionniste',
-      description: 'Ancienne coureuse de marathon, Marie a créé Le Ravito pour partager sa passion de l\'alimentation sportive.',
+      name: 'Charlotte Arbez',
+      role: 'Fondatrice & Championne',
+      description: 'Traileuse accomplie, Charlotte a créé Le Ravito pour partager sa passion du sport et de l\'alimentation sportive.',
       image: ABOUT_IMAGES.member1
+    },
+     {
+      name: 'Anaïs Holichon',
+      role: 'Cheffe de talent',
+      description: 'Spécialiste de la cuisine healthy, Anaïs compose nos menus en fonction des saisons et des besoins des sportifs.',
+      image: ABOUT_IMAGES.member3
     },
     {
       name: 'Thomas Martin',
-      role: 'Chef & Créateur',
-      description: 'Spécialiste de la cuisine healthy, Thomas compose nos menus en fonction des saisons et des besoins des sportifs.',
+      role: 'Coach sportif',
+      description: 'Triathlète confirmé, Thomas organise nos événements sportifs et accompagne nos clients dans leurs défis.',
       image: ABOUT_IMAGES.member2
     },
-    {
-      name: 'Sophie Laurent',
-      role: 'Coach Sportif',
-      description: 'Triathlète confirmée, Sophie organise nos événements sportifs et accompagne nos clients dans leurs défis.',
-      image: ABOUT_IMAGES.member3
-    }
   ]
 
   const suppliers = [
@@ -121,7 +121,7 @@ const NotreHistoirePage: React.FC = () => {
               <div className="relative">
                 <div className="relative overflow-hidden rounded-2xl">
                   <Image
-                    src={ABOUT_IMAGES.team}
+                    src={STORY_IMAGES.main}
                     alt="L'équipe du Ravito en action"
                     width={600}
                     height={500}
