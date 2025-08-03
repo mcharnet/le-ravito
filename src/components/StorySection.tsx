@@ -84,7 +84,7 @@ const StorySection: React.FC = () => {
           <div className="relative">
             <div className="relative overflow-hidden rounded-2xl group">
               <Image
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop&auto=format"
+                src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                 alt="Groupe de coureurs en action - L'esprit sportif du Ravito"
                 width={600}
                 height={600}

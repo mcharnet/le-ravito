@@ -10,9 +10,9 @@ const navigationItems: NavigationItem[] = [
   { label: 'Accueil', href: '/' },
   { label: 'Menu', href: '/menu' },
   { label: 'Événements', href: '/events' },
-  { label: 'Notre Histoire', href: '#story' },
-  { label: 'Contact', href: '#contact' },
-  { label: 'Réserver', href: '#reservation', isExternal: true },
+  { label: 'Notre Histoire', href: '/notre-histoire' },
+  { label: 'Contact', href: '/contact' },
+  { label: 'Réserver', href: '/reserver' },
 ]
 
 const Navigation: React.FC = () => {

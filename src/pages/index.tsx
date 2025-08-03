@@ -5,8 +5,7 @@ import HeroSlider from '@/components/HeroSlider'
 import StorySection from '@/components/StorySection'
 import ReviewSection from '@/components/ReviewSection'
 import Footer from '@/components/Footer'
-import ContactSection from '@/components/ContactSection'
-import ReservationSection from '@/components/ReservationSection'
+
 
 const HomePage: React.FC = () => {
   return (
@@ -71,11 +70,41 @@ const HomePage: React.FC = () => {
           {/* Reviews Section */}
           <ReviewSection />
 
-          {/* Reservation Section */}
-          <ReservationSection />
-
-          {/* Contact Section */}
-          <ContactSection />
+          {/* Call to Action Section */}
+          <section className="py-16 bg-gray-50">
+            <div className="container-custom text-center">
+              <div className="bg-white rounded-2xl p-12 max-w-4xl mx-auto shadow-lg">
+                <h2 className="text-3xl md:text-4xl font-bold text-custom-grey mb-6">
+                  Prêt à Découvrir Le Ravito ?
+                </h2>
+                <p className="text-lg text-custom-grey/70 mb-8 max-w-2xl mx-auto">
+                  Rejoignez notre communauté de sportifs passionnés et découvrez 
+                  des produits sains adaptés à vos besoins.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a
+                    href="/menu"
+                    className="px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                  >
+                    Découvrir la carte
+                  </a>
+                  <a
+                    href="/reserver"
+                    className="px-8 py-4 border-2 border-accent-blue text-accent-blue font-semibold rounded-lg transition-all duration-300 hover:bg-accent-blue hover:text-white hover:scale-105"
+                  >
+                    Réserver une table
+                  </a>
+                  <a
+                    href="/events"
+                    className="px-8 py-4 border-2 border-dark-green text-dark-green font-semibold rounded-lg transition-all duration-300 hover:bg-dark-green hover:text-white hover:scale-105"
+                  >
+                    Nos événements
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
 
         {/* Footer */}

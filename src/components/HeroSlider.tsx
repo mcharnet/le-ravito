@@ -22,7 +22,7 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     title: 'Bienvenue au Ravito',
     subtitle: 'Votre café bar dédié aux sportifs au cœur de Lyon',
     ctaPrimary: {
@@ -31,12 +31,12 @@ const heroSlides: HeroSlide[] = [
     },
     ctaSecondary: {
       text: 'Réserver une table',
-      href: '#reservation'
+      href: '/reserver'
     }
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=1920&h=1080&fit=crop&auto=format',
+    image: 'https://images.unsplash.com/photo-1436076863939-06870fe779c2?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     title: 'Ravitaillement & Convivialité',
     subtitle: 'Des produits sains pour accompagner vos performances',
     ctaPrimary: {
@@ -45,7 +45,7 @@ const heroSlides: HeroSlide[] = [
     },
     ctaSecondary: {
       text: 'Click & Collect',
-      href: '#click-collect'
+      href: '/reserver'
     }
   }
 ]

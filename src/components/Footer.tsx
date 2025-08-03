@@ -22,7 +22,9 @@ const Footer: React.FC = () => {
     { label: 'Accueil', href: '/' },
     { label: 'Menu', href: '/menu' },
     { label: 'Événements', href: '/events' },
-    { label: 'Réserver', href: '#reservation' },
+    { label: 'Notre Histoire', href: '/notre-histoire' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Réserver', href: '/reserver' },
   ]
 
   const socialLinks = [
