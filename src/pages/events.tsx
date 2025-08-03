@@ -5,95 +5,11 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Calendar, MapPin, Users, Clock, Filter, UserPlus } from 'lucide-react'
 import type { Event } from '@/types'
-import { EVENT_IMAGES } from '@/utils/images'
+import type { GetStaticProps } from 'next'
+import { getEvents, type SanityEvent } from '@/sanity/lib/api'
+import { adaptEvent } from '@/sanity/lib/adapters'
 
-const eventsData: Event[] = [
-  {
-    id: '1',
-    name: 'Course Matinale du Parc',
-    description: 'Rejoignez-nous pour une course de 5km dans le Parc de la Tête d\'Or, suivie d\'un petit-déjeuner énergétique au Ravito.',
-    date: '2024-02-15',
-    time: '07:30',
-    price: 15,
-    image: EVENT_IMAGES.morningRun,
-    tag: 'Gratuit',
-    category: 'course',
-    maxParticipants: 25,
-    registeredParticipants: 18
-  },
-  {
-    id: '2',
-    name: 'Atelier Nutrition Sportive',
-    description: 'Découvrez les secrets d\'une alimentation optimale pour vos performances avec notre nutritionniste partenaire.',
-    date: '2024-02-20',
-    time: '19:00',
-    price: 25,
-    image: EVENT_IMAGES.nutritionWorkshop,
-    tag: 'Formation',
-    category: 'atelier',
-    maxParticipants: 15,
-    registeredParticipants: 8
-  },
-  {
-    id: '3',
-    name: 'Sortie Vélo Monts du Lyonnais',
-    description: 'Parcours de 40km dans les Monts du Lyonnais pour cyclistes confirmés. Ravitaillement et collation inclus.',
-    date: '2024-02-25',
-    time: '08:00',
-    price: 35,
-    image: EVENT_IMAGES.bikeRide,
-    tag: 'Confirmé',
-    category: 'course',
-    maxParticipants: 20,
-    registeredParticipants: 14
-  },
-  {
-    id: '4',
-    name: 'Rencontre Club de Course',
-    description: 'Soirée conviviale pour tous les membres du club de course du Ravito. Échanges, conseils et planification des prochaines sorties.',
-    date: '2024-03-01',
-    time: '18:30',
-    image: EVENT_IMAGES.clubMeeting,
-    tag: 'Membres',
-    category: 'rencontre',
-    maxParticipants: 30,
-    registeredParticipants: 22
-  },
-  {
-    id: '5',
-    name: 'Initiation Trail Running',
-    description: 'Première approche du trail running dans les collines de Lyon. Séance adaptée aux débutants avec conseils techniques.',
-    date: '2024-03-08',
-    time: '09:00',
-    price: 20,
-    image: EVENT_IMAGES.trailRunning,
-    tag: 'Débutant',
-    category: 'course',
-    maxParticipants: 12,
-    registeredParticipants: 5
-  },
-  {
-    id: '6',
-    name: 'Atelier Smoothie Bowl',
-    description: 'Apprenez à préparer des smoothie bowls parfaits pour vos petits-déjeuners sportifs. Dégustation incluse !',
-    date: '2024-03-12',
-    time: '10:00',
-    price: 18,
-    image: EVENT_IMAGES.smoothieWorkshop,
-    tag: 'Cuisine',
-    category: 'atelier',
-    maxParticipants: 10,
-    registeredParticipants: 7
-  }
-]
-
-const categories = [
-  { id: 'all', label: 'Tous', count: eventsData.length },
-  { id: 'course', label: 'Courses', count: eventsData.filter(event => event.category === 'course').length },
-  { id: 'atelier', label: 'Ateliers', count: eventsData.filter(event => event.category === 'atelier').length },
-  { id: 'rencontre', label: 'Rencontres', count: eventsData.filter(event => event.category === 'rencontre').length },
-  { id: 'entrainement', label: 'Entraînements', count: eventsData.filter(event => event.category === 'entrainement').length },
-]
+// Les données sont maintenant récupérées via getStaticProps depuis Sanity
 
 const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   const isFullyBooked = Boolean(event.maxParticipants && event.registeredParticipants >= event.maxParticipants)
@@ -214,16 +130,21 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
   )
 }
 
-const EventsPage: React.FC = () => {
+interface EventsPageProps {
+	events: Event[]
+	categories: Array<{ id: string; label: string; count: number }>
+}
+
+const EventsPage: React.FC<EventsPageProps> = ({ events, categories }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [filteredEvents, setFilteredEvents] = useState<Event[]>(eventsData)
+  const [filteredEvents, setFilteredEvents] = useState<Event[]>(events)
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId)
     if (categoryId === 'all') {
-      setFilteredEvents(eventsData)
+      setFilteredEvents(events)
     } else {
-      setFilteredEvents(eventsData.filter(event => event.category === categoryId))
+      setFilteredEvents(events.filter(event => event.category === categoryId))
     }
   }
 
@@ -371,3 +292,43 @@ const EventsPage: React.FC = () => {
 }
 
 export default EventsPage
+
+// Récupération des données depuis Sanity au build time
+export const getStaticProps: GetStaticProps<EventsPageProps> = async () => {
+	try {
+		// Récupérer les événements depuis Sanity
+		const sanityEvents = await getEvents()
+
+		// Adapter les données Sanity vers les types de l'application
+		const events = sanityEvents.map(adaptEvent)
+
+		// Créer les catégories avec compteurs
+		const categories = [
+			{ id: 'all', label: 'Tous', count: events.length },
+			{ id: 'course', label: 'Courses', count: events.filter(event => event.category === 'course').length },
+			{ id: 'atelier', label: 'Ateliers', count: events.filter(event => event.category === 'atelier').length },
+			{ id: 'rencontre', label: 'Rencontres', count: events.filter(event => event.category === 'rencontre').length },
+			{ id: 'entrainement', label: 'Entraînements', count: events.filter(event => event.category === 'entrainement').length },
+		]
+
+		return {
+			props: {
+				events,
+				categories,
+			},
+			// Revalider la page toutes les 5 minutes
+			revalidate: 300,
+		}
+	} catch (error) {
+		console.error('Erreur lors de la récupération des données des événements:', error)
+		
+		// Retourner des données vides en cas d'erreur
+		return {
+			props: {
+				events: [],
+				categories: [{ id: 'all', label: 'Tous', count: 0 }],
+			},
+			revalidate: 60, // Retry plus fréquemment en cas d'erreur
+		}
+	}
+}

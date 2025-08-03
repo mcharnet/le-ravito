@@ -5,98 +5,11 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Filter, ShoppingCart } from 'lucide-react'
 import type { MenuItem } from '@/types'
-import { MENU_IMAGES } from '@/utils/images'
+import type { GetStaticProps } from 'next'
+import { getMenuItems, getCategories, type SanityMenuItem, type SanityCategory } from '@/sanity/lib/api'
+import { adaptMenuItem } from '@/sanity/lib/adapters'
 
-const menuItems: MenuItem[] = [
-  {
-    id: '1',
-    name: 'Smoothie Bowl Energisant',
-    description: 'Bowl açaï, banane, granola maison, fruits de saison et graines de chia',
-    price: 12.50,
-    image: MENU_IMAGES.smoothieBowl,
-    tag: 'Petit-déjeuner',
-    category: 'boisson',
-    isAvailable: true
-  },
-  {
-    id: '2',
-    name: 'Sandwich Sportif Complet',
-    description: 'Pain complet, avocat, saumon fumé, oeuf, roquette et cream cheese',
-    price: 14.00,
-    image: MENU_IMAGES.sandwich,
-    tag: 'Protéines',
-    category: 'plat',
-    isAvailable: true
-  },
-  {
-    id: '3',
-    name: 'Energy Balls Maison',
-    description: 'Mélange de dattes, amandes, cacao et noix de coco (lot de 4)',
-    price: 8.50,
-    image: MENU_IMAGES.energyBalls,
-    tag: 'Vegan',
-    category: 'snack',
-    isAvailable: true
-  },
-  {
-    id: '4',
-    name: 'Jus Vert Détox',
-    description: 'Épinards, pomme verte, concombre, citron vert et gingembre frais',
-    price: 6.50,
-    image: MENU_IMAGES.greenJuice,
-    tag: 'Détox',
-    category: 'boisson',
-    isAvailable: true
-  },
-  {
-    id: '5',
-    name: 'Salade de Quinoa Power',
-    description: 'Quinoa, pois chiches, avocat, tomates cerises, feta et vinaigrette tahini',
-    price: 15.50,
-    image: MENU_IMAGES.quinoaSalad,
-    tag: 'Sans gluten',
-    category: 'plat',
-    isAvailable: true
-  },
-  {
-    id: '6',
-    name: 'Café Protéiné',
-    description: 'Espresso, lait d\'amande, protéine vanille et cannelle',
-    price: 5.50,
-    image: MENU_IMAGES.proteinCoffee,
-    tag: 'Post-workout',
-    category: 'boisson',
-    isAvailable: false
-  },
-  {
-    id: '7',
-    name: 'Chia Pudding Fruits Rouges',
-    description: 'Graines de chia, lait de coco, fruits rouges et miel local',
-    price: 9.00,
-    image: MENU_IMAGES.chiaPudding,
-    tag: 'Sans lactose',
-    category: 'dessert',
-    isAvailable: true
-  },
-  {
-    id: '8',
-    name: 'Wrap Méditerranéen',
-    description: 'Tortilla complète, houmous, légumes grillés, olives et tzatziki',
-    price: 11.50,
-    image: MENU_IMAGES.wrap,
-    tag: 'Végétarien',
-    category: 'plat',
-    isAvailable: true
-  }
-]
-
-const categories = [
-  { id: 'all', label: 'Tout', count: menuItems.length },
-  { id: 'boisson', label: 'Boissons', count: menuItems.filter(item => item.category === 'boisson').length },
-  { id: 'plat', label: 'Plats', count: menuItems.filter(item => item.category === 'plat').length },
-  { id: 'snack', label: 'Snacks', count: menuItems.filter(item => item.category === 'snack').length },
-  { id: 'dessert', label: 'Desserts', count: menuItems.filter(item => item.category === 'dessert').length },
-]
+// Les données sont maintenant récupérées via getStaticProps depuis Sanity
 
 const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
   const handleOrder = () => {
@@ -180,7 +93,12 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
   )
 }
 
-const MenuPage: React.FC = () => {
+interface MenuPageProps {
+	menuItems: MenuItem[]
+	categories: Array<{ id: string; label: string; count: number }>
+}
+
+const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [filteredItems, setFilteredItems] = useState<MenuItem[]>(menuItems)
 
@@ -321,3 +239,44 @@ const MenuPage: React.FC = () => {
 }
 
 export default MenuPage
+
+// Récupération des données depuis Sanity au build time
+export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
+	try {
+		// Récupérer les données depuis Sanity
+		const sanityMenuItems = await getMenuItems()
+		const sanityCategories = await getCategories()
+
+		// Adapter les données Sanity vers les types de l'application
+		const menuItems = sanityMenuItems.map(adaptMenuItem)
+
+		// Créer les catégories avec compteurs
+		const categories = [
+			{ id: 'all', label: 'Tout', count: menuItems.length },
+			{ id: 'boisson', label: 'Boissons', count: menuItems.filter(item => item.category === 'boisson').length },
+			{ id: 'plat', label: 'Plats', count: menuItems.filter(item => item.category === 'plat').length },
+			{ id: 'snack', label: 'Snacks', count: menuItems.filter(item => item.category === 'snack').length },
+			{ id: 'dessert', label: 'Desserts', count: menuItems.filter(item => item.category === 'dessert').length },
+		]
+
+		return {
+			props: {
+				menuItems,
+				categories,
+			},
+			// Revalider la page toutes les 5 minutes
+			revalidate: 300,
+		}
+	} catch (error) {
+		console.error('Erreur lors de la récupération des données du menu:', error)
+		
+		// Retourner des données vides en cas d'erreur
+		return {
+			props: {
+				menuItems: [],
+				categories: [{ id: 'all', label: 'Tout', count: 0 }],
+			},
+			revalidate: 60, // Retry plus fréquemment en cas d'erreur
+		}
+	}
+}

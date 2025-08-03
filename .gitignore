@@ -14,6 +14,7 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
@@ -49,5 +50,6 @@ logs
 *.log
 
 # Sanity
+.sanity
 /sanity/dist
 /sanity/.sanity
