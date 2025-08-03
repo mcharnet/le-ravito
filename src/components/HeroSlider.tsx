@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { HERO_IMAGES } from '@/utils/images'
 
 interface HeroSlide {
   id: number
@@ -22,7 +23,7 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: HERO_IMAGES.slide1,
     title: 'Bienvenue au Ravito',
     subtitle: 'Votre café bar dédié aux sportifs au cœur de Lyon',
     ctaPrimary: {
@@ -36,7 +37,7 @@ const heroSlides: HeroSlide[] = [
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1436076863939-06870fe779c2?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    image: HERO_IMAGES.slide2,
     title: 'Ravitaillement & Convivialité',
     subtitle: 'Des produits sains pour accompagner vos performances',
     ctaPrimary: {

@@ -1,4 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document'
+import { META_IMAGES } from '@/utils/images'
 
 export default function Document() {
   return (
@@ -15,14 +16,14 @@ export default function Document() {
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Le Ravito - Café Bar Sportif à Lyon" />
         <meta property="og:description" content="Votre café bar dédié aux sportifs à Lyon. Produits sains, locaux et adaptés aux besoins des athlètes." />
-        <meta property="og:image" content="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=630&fit=crop&auto=format" />
+        <meta property="og:image" content={META_IMAGES.ogImage} />
         <meta property="og:url" content="https://leravito.fr" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Le Ravito - Café Bar Sportif à Lyon" />
         <meta name="twitter:description" content="Votre café bar dédié aux sportifs à Lyon. Produits sains, locaux et adaptés aux besoins des athlètes." />
-        <meta name="twitter:image" content="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=630&fit=crop&auto=format" />
+        <meta name="twitter:image" content={META_IMAGES.ogImage} />
         
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

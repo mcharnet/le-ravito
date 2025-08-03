@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Calendar, MapPin, Users, Clock, Filter, UserPlus } from 'lucide-react'
 import type { Event } from '@/types'
+import { EVENT_IMAGES } from '@/utils/images'
 
 const eventsData: Event[] = [
   {
@@ -14,7 +15,7 @@ const eventsData: Event[] = [
     date: '2024-02-15',
     time: '07:30',
     price: 15,
-    image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.morningRun,
     tag: 'Gratuit',
     category: 'course',
     maxParticipants: 25,
@@ -27,7 +28,7 @@ const eventsData: Event[] = [
     date: '2024-02-20',
     time: '19:00',
     price: 25,
-    image: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.nutritionWorkshop,
     tag: 'Formation',
     category: 'atelier',
     maxParticipants: 15,
@@ -40,7 +41,7 @@ const eventsData: Event[] = [
     date: '2024-02-25',
     time: '08:00',
     price: 35,
-    image: 'https://images.unsplash.com/photo-1502744688674-c619d1586c9e?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.bikeRide,
     tag: 'Confirmé',
     category: 'course',
     maxParticipants: 20,
@@ -52,7 +53,7 @@ const eventsData: Event[] = [
     description: 'Soirée conviviale pour tous les membres du club de course du Ravito. Échanges, conseils et planification des prochaines sorties.',
     date: '2024-03-01',
     time: '18:30',
-    image: 'https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.clubMeeting,
     tag: 'Membres',
     category: 'rencontre',
     maxParticipants: 30,
@@ -65,7 +66,7 @@ const eventsData: Event[] = [
     date: '2024-03-08',
     time: '09:00',
     price: 20,
-    image: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.trailRunning,
     tag: 'Débutant',
     category: 'course',
     maxParticipants: 12,
@@ -78,7 +79,7 @@ const eventsData: Event[] = [
     date: '2024-03-12',
     time: '10:00',
     price: 18,
-    image: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=600&h=400&fit=crop&auto=format',
+    image: EVENT_IMAGES.smoothieWorkshop,
     tag: 'Cuisine',
     category: 'atelier',
     maxParticipants: 10,

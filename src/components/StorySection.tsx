@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { STORY_IMAGES } from '@/utils/images'
 
 const StorySection: React.FC = () => {
   return (
@@ -84,7 +85,7 @@ const StorySection: React.FC = () => {
           <div className="relative">
             <div className="relative overflow-hidden rounded-2xl group">
               <Image
-                src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                src={STORY_IMAGES.main}
                 alt="Groupe de coureurs en action - L'esprit sportif du Ravito"
                 width={600}
                 height={600}

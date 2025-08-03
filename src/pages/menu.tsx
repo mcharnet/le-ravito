@@ -5,6 +5,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Star, Filter, ShoppingCart } from 'lucide-react'
 import type { MenuItem } from '@/types'
+import { MENU_IMAGES } from '@/utils/images'
 
 const menuItems: MenuItem[] = [
   {
@@ -12,7 +13,7 @@ const menuItems: MenuItem[] = [
     name: 'Smoothie Bowl Energisant',
     description: 'Bowl açaï, banane, granola maison, fruits de saison et graines de chia',
     price: 12.50,
-    image: 'https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.smoothieBowl,
     tag: 'Petit-déjeuner',
     category: 'boisson',
     isAvailable: true
@@ -22,7 +23,7 @@ const menuItems: MenuItem[] = [
     name: 'Sandwich Sportif Complet',
     description: 'Pain complet, avocat, saumon fumé, oeuf, roquette et cream cheese',
     price: 14.00,
-    image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.sandwich,
     tag: 'Protéines',
     category: 'plat',
     isAvailable: true
@@ -32,7 +33,7 @@ const menuItems: MenuItem[] = [
     name: 'Energy Balls Maison',
     description: 'Mélange de dattes, amandes, cacao et noix de coco (lot de 4)',
     price: 8.50,
-    image: 'https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.energyBalls,
     tag: 'Vegan',
     category: 'snack',
     isAvailable: true
@@ -42,7 +43,7 @@ const menuItems: MenuItem[] = [
     name: 'Jus Vert Détox',
     description: 'Épinards, pomme verte, concombre, citron vert et gingembre frais',
     price: 6.50,
-    image: 'https://images.unsplash.com/photo-1610970881699-44a5587cabec?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.greenJuice,
     tag: 'Détox',
     category: 'boisson',
     isAvailable: true
@@ -52,7 +53,7 @@ const menuItems: MenuItem[] = [
     name: 'Salade de Quinoa Power',
     description: 'Quinoa, pois chiches, avocat, tomates cerises, feta et vinaigrette tahini',
     price: 15.50,
-    image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.quinoaSalad,
     tag: 'Sans gluten',
     category: 'plat',
     isAvailable: true
@@ -62,7 +63,7 @@ const menuItems: MenuItem[] = [
     name: 'Café Protéiné',
     description: 'Espresso, lait d\'amande, protéine vanille et cannelle',
     price: 5.50,
-    image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.proteinCoffee,
     tag: 'Post-workout',
     category: 'boisson',
     isAvailable: false
@@ -72,7 +73,7 @@ const menuItems: MenuItem[] = [
     name: 'Chia Pudding Fruits Rouges',
     description: 'Graines de chia, lait de coco, fruits rouges et miel local',
     price: 9.00,
-    image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.chiaPudding,
     tag: 'Sans lactose',
     category: 'dessert',
     isAvailable: true
@@ -82,7 +83,7 @@ const menuItems: MenuItem[] = [
     name: 'Wrap Méditerranéen',
     description: 'Tortilla complète, houmous, légumes grillés, olives et tzatziki',
     price: 11.50,
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=600&h=400&fit=crop&auto=format',
+    image: MENU_IMAGES.wrap,
     tag: 'Végétarien',
     category: 'plat',
     isAvailable: true

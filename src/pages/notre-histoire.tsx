@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 import { Users, Leaf, Award, Heart } from 'lucide-react'
+import { ABOUT_IMAGES } from '@/utils/images'
 
 const NotreHistoirePage: React.FC = () => {
   const values = [
@@ -38,19 +39,19 @@ const NotreHistoirePage: React.FC = () => {
       name: 'Marie Dubois',
       role: 'Fondatrice & Nutritionniste',
       description: 'Ancienne coureuse de marathon, Marie a créé Le Ravito pour partager sa passion de l\'alimentation sportive.',
-      image: 'https://images.unsplash.com/photo-1494790108755-2616b15734a7?w=300&h=300&fit=crop&auto=format'
+      image: ABOUT_IMAGES.member1
     },
     {
       name: 'Thomas Martin',
       role: 'Chef & Créateur',
       description: 'Spécialiste de la cuisine healthy, Thomas compose nos menus en fonction des saisons et des besoins des sportifs.',
-      image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&auto=format'
+      image: ABOUT_IMAGES.member2
     },
     {
       name: 'Sophie Laurent',
       role: 'Coach Sportif',
       description: 'Triathlète confirmée, Sophie organise nos événements sportifs et accompagne nos clients dans leurs défis.',
-      image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop&auto=format'
+      image: ABOUT_IMAGES.member3
     }
   ]
 
@@ -120,7 +121,7 @@ const NotreHistoirePage: React.FC = () => {
               <div className="relative">
                 <div className="relative overflow-hidden rounded-2xl">
                   <Image
-                    src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=500&fit=crop&auto=format"
+                    src={ABOUT_IMAGES.team}
                     alt="L'équipe du Ravito en action"
                     width={600}
                     height={500}
