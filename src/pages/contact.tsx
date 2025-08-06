@@ -264,36 +264,41 @@ const ContactPage: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Phone & Email */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="p-2 bg-accent-orange/10 rounded-lg">
-                        <Phone className="text-accent-orange" size={20} />
+                {/* Contact Direct */}
+                <div className="bg-white p-6 rounded-xl shadow-md">
+                  <h3 className="font-semibold text-lg text-custom-grey mb-4">
+                    Nous contacter directement
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-accent-orange/10 rounded-lg flex-shrink-0">
+                        <Phone className="text-accent-orange" size={18} />
                       </div>
-                      <h3 className="font-semibold text-custom-grey">Téléphone</h3>
-                    </div>
-                    <a 
-                      href={`tel:${contactInfo.phone}`}
-                      className="text-custom-grey/70 hover:text-accent-orange transition-colors duration-200 font-medium"
-                    >
-                      {contactInfo.phone}
-                    </a>
-                  </div>
-
-                  <div className="bg-white p-6 rounded-xl shadow-md">
-                    <div className="flex items-center space-x-3 mb-3">
-                      <div className="p-2 bg-dark-green/10 rounded-lg">
-                        <Mail className="text-dark-green" size={20} />
+                      <div>
+                        <p className="text-xs text-custom-grey/60">Téléphone</p>
+                        <a 
+                          href={`tel:${contactInfo.phone}`}
+                          className="text-custom-grey font-medium hover:text-accent-orange transition-colors duration-200"
+                        >
+                          {contactInfo.phone}
+                        </a>
                       </div>
-                      <h3 className="font-semibold text-custom-grey">Email</h3>
                     </div>
-                    <a 
-                      href={`mailto:${contactInfo.email}`}
-                      className="text-custom-grey/70 hover:text-accent-orange transition-colors duration-200 font-medium"
-                    >
-                      {contactInfo.email}
-                    </a>
+                    
+                    <div className="flex items-center space-x-3">
+                      <div className="p-2 bg-dark-green/10 rounded-lg flex-shrink-0">
+                        <Mail className="text-dark-green" size={18} />
+                      </div>
+                      <div>
+                        <p className="text-xs text-custom-grey/60">Email</p>
+                        <a 
+                          href={`mailto:${contactInfo.email}`}
+                          className="text-custom-grey font-medium hover:text-accent-orange transition-colors duration-200"
+                        >
+                          {contactInfo.email}
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
