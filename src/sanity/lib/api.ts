@@ -1,5 +1,5 @@
 import { client } from './client'
-import { menuItemsQuery, categoriesQuery, eventsQuery, upcomingEventsQuery } from './queries'
+import { menuItemsQuery, eventsQuery, upcomingEventsQuery } from './queries'
 
 // Types compatibles avec les types existants du projet
 export interface SanityMenuItem {
@@ -16,13 +16,6 @@ export interface SanityMenuItem {
 		name: string
 		order: number
 	}
-}
-
-export interface SanityCategory {
-	_id: string
-	name: string
-	description?: string
-	order: number
 }
 
 export interface SanityEvent {
@@ -44,15 +37,6 @@ export const getMenuItems = async (): Promise<SanityMenuItem[]> => {
 		return await client.fetch(menuItemsQuery)
 	} catch (error) {
 		console.error('Erreur lors de la récupération des éléments du menu:', error)
-		return []
-	}
-}
-
-export const getCategories = async (): Promise<SanityCategory[]> => {
-	try {
-		return await client.fetch(categoriesQuery)
-	} catch (error) {
-		console.error('Erreur lors de la récupération des catégories:', error)
 		return []
 	}
 }

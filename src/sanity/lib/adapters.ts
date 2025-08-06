@@ -10,7 +10,7 @@ export const adaptMenuItem = (sanityItem: SanityMenuItem): MenuItem => {
 		name: sanityItem.name,
 		description: sanityItem.description || '',
 		price: sanityItem.price || 0,
-		image: sanityItem.image ? urlFor(sanityItem.image).width(400).height(300).url() : '/images/placeholder.jpg',
+		image: sanityItem.image ? urlFor(sanityItem.image).width(400).height(300).url() : 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop&auto=format&q=60',
 		category: mapSanityCategoryToLocal(sanityItem.category?.name || 'plat'),
 		isAvailable: sanityItem.isAvailable ?? true
 	}
@@ -33,9 +33,9 @@ export const adaptEvent = (sanityEvent: SanityEvent): Event => {
 		description: sanityEvent.description || '',
 		date: eventDate.toISOString().split('T')[0], // Format YYYY-MM-DD
 		time: eventDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
-		image: sanityEvent.image ? urlFor(sanityEvent.image).width(400).height(300).url() : '/images/placeholder.jpg',
+		image: sanityEvent.image ? urlFor(sanityEvent.image).width(400).height(300).url() : 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop&auto=format&q=60',
 		category: mapSanityEventCategory(sanityEvent.category),
-		registeredParticipants: 0 // À implémenter plus tard avec un système de réservation
+		registeredParticipants: 0 // Toujours 0 pour l'instant (pas de système de réservation)
 	}
 
 	// Ajouter price seulement s'il existe pour éviter undefined

@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import { Calendar, MapPin, Users, Clock, Filter, UserPlus } from 'lucide-react'
 import type { Event } from '@/types'
 import type { GetStaticProps } from 'next'
-import { getEvents, type SanityEvent } from '@/sanity/lib/api'
+import { getEvents } from '@/sanity/lib/api'
 import { adaptEvent } from '@/sanity/lib/adapters'
 
 // Les données sont maintenant récupérées via getStaticProps depuis Sanity
@@ -44,6 +44,8 @@ const EventCard: React.FC<{ event: Event }> = ({ event }) => {
           src={event.image}
           alt={event.name}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
           className={`
             object-cover transition-transform duration-500 ease-in-out
             hover:scale-110

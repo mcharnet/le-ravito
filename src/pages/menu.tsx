@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import { Filter, ShoppingCart } from 'lucide-react'
 import type { MenuItem } from '@/types'
 import type { GetStaticProps } from 'next'
-import { getMenuItems, getCategories, type SanityMenuItem, type SanityCategory } from '@/sanity/lib/api'
+import { getMenuItems } from '@/sanity/lib/api'
 import { adaptMenuItem } from '@/sanity/lib/adapters'
 
 // Les données sont maintenant récupérées via getStaticProps depuis Sanity
@@ -32,6 +32,8 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
           src={item.image}
           alt={item.name}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          loading="lazy"
           className={`
             object-cover transition-transform duration-500 ease-in-out
             hover:scale-110
@@ -245,7 +247,6 @@ export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
 	try {
 		// Récupérer les données depuis Sanity
 		const sanityMenuItems = await getMenuItems()
-		const sanityCategories = await getCategories()
 
 		// Adapter les données Sanity vers les types de l'application
 		const menuItems = sanityMenuItems.map(adaptMenuItem)

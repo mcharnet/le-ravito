@@ -17,15 +17,6 @@ export const menuItemsQuery = `
   }
 `
 
-export const categoriesQuery = `
-  *[_type == "category"] | order(order) {
-    _id,
-    name,
-    description,
-    order
-  }
-`
-
 export const eventsQuery = `
   *[_type == "event" && isActive == true && startDate >= now()] | order(startDate) {
     _id,

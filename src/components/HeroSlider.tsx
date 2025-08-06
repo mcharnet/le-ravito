@@ -78,6 +78,8 @@ const HeroSlider: React.FC = () => {
           src={currentSlideData.image}
           alt={currentSlideData.title}
           fill
+          sizes="100vw"
+          priority
           className={`
             object-cover transition-all duration-1000 ease-in-out
             ${isLoaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0'}
