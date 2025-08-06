@@ -1,5 +1,5 @@
 import type { MenuItem, Event } from '@/types'
-import type { SanityMenuItem, SanityEvent } from './api'
+import type { SanityMenuItem, SanityEvent, SanityEventCategory } from './api'
 import { urlFor } from './client'
 
 // Fonctions pour convertir les données Sanity vers les types de l'application
@@ -11,7 +11,7 @@ export const adaptMenuItem = (sanityItem: SanityMenuItem): MenuItem => {
 		description: sanityItem.description || '',
 		price: sanityItem.price || 0,
 		image: sanityItem.image ? urlFor(sanityItem.image).width(400).height(300).url() : 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop&auto=format&q=60',
-		category: mapSanityCategoryToLocal(sanityItem.category?.name || 'plat'),
+		category: sanityItem.category?.name || 'Autre',
 		isAvailable: sanityItem.isAvailable ?? true
 	}
 
@@ -34,7 +34,7 @@ export const adaptEvent = (sanityEvent: SanityEvent): Event => {
 		date: eventDate.toISOString().split('T')[0], // Format YYYY-MM-DD
 		time: eventDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' }),
 		image: sanityEvent.image ? urlFor(sanityEvent.image).width(400).height(300).url() : 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop&auto=format&q=60',
-		category: mapSanityEventCategory(sanityEvent.category),
+		category: sanityEvent.category?.name || 'Autre',
 		registeredParticipants: 0 // Toujours 0 pour l'instant (pas de système de réservation)
 	}
 
@@ -44,8 +44,8 @@ export const adaptEvent = (sanityEvent: SanityEvent): Event => {
 	}
 
 	// Ajouter tag seulement s'il existe pour éviter undefined
-	if (sanityEvent.category) {
-		event.tag = capitalizeFirst(sanityEvent.category)
+	if (sanityEvent.category?.name) {
+		event.tag = sanityEvent.category.name
 	}
 
 	// Ajouter maxParticipants seulement s'il existe pour éviter undefined
@@ -56,29 +56,14 @@ export const adaptEvent = (sanityEvent: SanityEvent): Event => {
 	return event
 }
 
-// Fonction helper pour mapper les catégories Sanity vers les catégories locales
-const mapSanityCategoryToLocal = (categoryName: string): 'boisson' | 'snack' | 'plat' | 'dessert' => {
-	const lowerCategory = categoryName.toLowerCase()
-	
-	if (lowerCategory.includes('boisson') || lowerCategory.includes('drink')) return 'boisson'
-	if (lowerCategory.includes('snack') || lowerCategory.includes('collation')) return 'snack'
-	if (lowerCategory.includes('dessert')) return 'dessert'
-	return 'plat' // Par défaut
-}
 
-// Fonction helper pour mapper les catégories d'événements Sanity
-const mapSanityEventCategory = (category?: string): 'course' | 'entrainement' | 'rencontre' | 'atelier' => {
-	if (!category) return 'rencontre'
-	
-	const lowerCategory = category.toLowerCase()
-	
-	if (lowerCategory.includes('concert') || lowerCategory.includes('course')) return 'course'
-	if (lowerCategory.includes('entrainement') || lowerCategory.includes('training')) return 'entrainement'
-	if (lowerCategory.includes('atelier') || lowerCategory.includes('cooking') || lowerCategory.includes('tasting')) return 'atelier'
-	return 'rencontre' // Par défaut
-}
 
-// Fonction helper pour capitaliser la première lettre
-const capitalizeFirst = (str: string) => {
-	return str.charAt(0).toUpperCase() + str.slice(1)
+// Fonction pour adapter les catégories d'événements Sanity
+export const adaptEventCategory = (sanityCategory: SanityEventCategory) => {
+	return {
+		id: sanityCategory._id,
+		name: sanityCategory.name,
+		description: sanityCategory.description,
+		order: sanityCategory.order
+	}
 }

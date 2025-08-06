@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import { Calendar, MapPin, Users, Clock, Filter, UserPlus } from 'lucide-react'
 import type { Event } from '@/types'
 import type { GetStaticProps } from 'next'
-import { getEvents } from '@/sanity/lib/api'
+import { getEvents, getEventCategories } from '@/sanity/lib/api'
 import { adaptEvent } from '@/sanity/lib/adapters'
 
 // Les données sont maintenant récupérées via getStaticProps depuis Sanity
@@ -298,20 +298,31 @@ export default EventsPage
 // Récupération des données depuis Sanity au build time
 export const getStaticProps: GetStaticProps<EventsPageProps> = async () => {
 	try {
-		// Récupérer les événements depuis Sanity
-		const sanityEvents = await getEvents()
+		// Récupérer les événements et catégories depuis Sanity
+		const [sanityEvents, sanityEventCategories] = await Promise.all([
+			getEvents(),
+			getEventCategories()
+		])
 
 		// Adapter les données Sanity vers les types de l'application
 		const events = sanityEvents.map(adaptEvent)
 
-		// Créer les catégories avec compteurs
+		// Créer les catégories dynamiquement depuis Sanity
 		const categories = [
-			{ id: 'all', label: 'Tous', count: events.length },
-			{ id: 'course', label: 'Courses', count: events.filter(event => event.category === 'course').length },
-			{ id: 'atelier', label: 'Ateliers', count: events.filter(event => event.category === 'atelier').length },
-			{ id: 'rencontre', label: 'Rencontres', count: events.filter(event => event.category === 'rencontre').length },
-			{ id: 'entrainement', label: 'Entraînements', count: events.filter(event => event.category === 'entrainement').length },
+			{ id: 'all', label: 'Tous', count: events.length }
 		]
+
+		// Ajouter les catégories Sanity avec leurs compteurs
+		sanityEventCategories.forEach(sanityCategory => {
+			const count = events.filter(event => event.category === sanityCategory.name).length
+			if (count > 0) { // Seulement ajouter les catégories qui ont des événements
+				categories.push({
+					id: sanityCategory.name,
+					label: sanityCategory.name,
+					count
+				})
+			}
+		})
 
 		return {
 			props: {

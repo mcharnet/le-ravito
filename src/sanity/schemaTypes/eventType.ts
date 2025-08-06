@@ -56,29 +56,25 @@ export const eventType = defineType({
 		}),
 		defineField({
 			name: 'category',
-			title: 'Type d\'événement',
-			type: 'string',
-			options: {
-				list: [
-					{ title: 'Sport', value: 'Sport' },
-					{ title: 'Dégustation', value: 'Dégustation' },
-					{ title: 'Soirée', value: 'Soirée' },
-					{ title: 'Cours de cuisine', value: 'Cuisine' }
-				]
-			}
+			title: 'Catégorie d\'événement',
+			type: 'reference',
+			to: [{ type: 'eventCategory' }],
+			validation: (rule: any) => rule.required()
 		})
 	],
 	preview: {
 		select: {
 			title: 'title',
 			subtitle: 'startDate',
-			media: 'image'
+			media: 'image',
+			category: 'category.name'
 		},
 		prepare: (selection: any) => {
-			const { title, subtitle } = selection
+			const { title, subtitle, category } = selection
+			const date = subtitle ? new Date(subtitle).toLocaleDateString('fr-FR') : ''
 			return {
 				title,
-				subtitle: subtitle ? new Date(subtitle).toLocaleDateString('fr-FR') : ''
+				subtitle: category ? `${category} - ${date}` : date
 			}
 		}
 	}

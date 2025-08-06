@@ -6,7 +6,7 @@ import Footer from '@/components/Footer'
 import { Filter, ShoppingCart } from 'lucide-react'
 import type { MenuItem } from '@/types'
 import type { GetStaticProps } from 'next'
-import { getMenuItems } from '@/sanity/lib/api'
+import { getMenuItems, getCategories } from '@/sanity/lib/api'
 import { adaptMenuItem } from '@/sanity/lib/adapters'
 
 // Les données sont maintenant récupérées via getStaticProps depuis Sanity
@@ -246,19 +246,30 @@ export default MenuPage
 export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
 	try {
 		// Récupérer les données depuis Sanity
-		const sanityMenuItems = await getMenuItems()
+		const [sanityMenuItems, sanityCategories] = await Promise.all([
+			getMenuItems(),
+			getCategories()
+		])
 
 		// Adapter les données Sanity vers les types de l'application
 		const menuItems = sanityMenuItems.map(adaptMenuItem)
 
-		// Créer les catégories avec compteurs
+		// Créer les catégories dynamiquement depuis Sanity
 		const categories = [
-			{ id: 'all', label: 'Tout', count: menuItems.length },
-			{ id: 'boisson', label: 'Boissons', count: menuItems.filter(item => item.category === 'boisson').length },
-			{ id: 'plat', label: 'Plats', count: menuItems.filter(item => item.category === 'plat').length },
-			{ id: 'snack', label: 'Snacks', count: menuItems.filter(item => item.category === 'snack').length },
-			{ id: 'dessert', label: 'Desserts', count: menuItems.filter(item => item.category === 'dessert').length },
+			{ id: 'all', label: 'Tout', count: menuItems.length }
 		]
+
+		// Ajouter les catégories Sanity avec leurs compteurs
+		sanityCategories.forEach(sanityCategory => {
+			const count = menuItems.filter(item => item.category === sanityCategory.name).length
+			if (count > 0) { // Seulement ajouter les catégories qui ont des items
+				categories.push({
+					id: sanityCategory.name,
+					label: sanityCategory.name,
+					count
+				})
+			}
+		})
 
 		return {
 			props: {

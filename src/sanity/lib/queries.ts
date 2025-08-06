@@ -1,5 +1,14 @@
 // Requêtes GROQ pour récupérer les données depuis Sanity
 
+export const categoriesQuery = `
+  *[_type == "category"] | order(order) {
+    _id,
+    name,
+    description,
+    order
+  }
+`
+
 export const menuItemsQuery = `
   *[_type == "menuItem" && isAvailable == true] | order(category->order, name) {
     _id,
@@ -11,7 +20,9 @@ export const menuItemsQuery = `
     isVegetarian,
     isVegan,
     category-> {
+      _id,
       name,
+      description,
       order
     }
   }
@@ -27,7 +38,10 @@ export const eventsQuery = `
     image,
     price,
     capacity,
-    category
+    category-> {
+      name,
+      order
+    }
   }
 `
 
@@ -38,6 +52,17 @@ export const upcomingEventsQuery = `
     description,
     startDate,
     image,
-    category
+    category-> {
+      name
+    }
+  }
+`
+
+export const eventCategoriesQuery = `
+  *[_type == "eventCategory"] | order(order) {
+    _id,
+    name,
+    description,
+    order
   }
 `

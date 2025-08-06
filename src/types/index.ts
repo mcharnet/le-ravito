@@ -5,7 +5,7 @@ export interface MenuItem {
   price: number
   image: string
   tag?: string
-  category: 'boisson' | 'snack' | 'plat' | 'dessert'
+  category: string
   isAvailable: boolean
 }
 
@@ -18,7 +18,7 @@ export interface Event {
   price?: number
   image: string
   tag?: string
-  category: 'course' | 'entrainement' | 'rencontre' | 'atelier'
+  category: string
   maxParticipants?: number
   registeredParticipants: number
 }
