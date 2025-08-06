@@ -10,7 +10,7 @@ export const categoriesQuery = `
 `
 
 export const menuItemsQuery = `
-  *[_type == "menuItem" && isAvailable == true] | order(category->order, name) {
+  *[_type == "menuItem"] | order(category->order, name) {
     _id,
     name,
     description,
@@ -19,6 +19,7 @@ export const menuItemsQuery = `
     allergens,
     isVegetarian,
     isVegan,
+    isAvailable,
     category-> {
       _id,
       name,
