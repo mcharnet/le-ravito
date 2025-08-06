@@ -223,15 +223,15 @@ const ContactPage: React.FC = () => {
 
               {/* Contact Information */}
               <div className="space-y-8">
-                {/* Address */}
+                {/* Google Maps avec adresse intégrée */}
                 <div className="bg-white p-6 rounded-xl shadow-md">
-                  <div className="flex items-start space-x-4">
+                  <div className="flex items-start space-x-4 mb-6">
                     <div className="p-3 bg-accent-blue/10 rounded-lg flex-shrink-0">
                       <MapPin className="text-accent-blue" size={24} />
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-lg text-custom-grey mb-2">
-                        Notre Adresse
+                        Nous Trouver
                       </h3>
                       <address className="text-custom-grey/70 not-italic leading-relaxed mb-4">
                         {contactInfo.address.street}<br />
@@ -247,6 +247,21 @@ const ContactPage: React.FC = () => {
                       </button>
                     </div>
                   </div>
+                  <div className="w-full h-80 rounded-lg overflow-hidden shadow-md">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2782.8858407516843!2d4.842329315557!3d45.77028017910662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4eb020f2a1f4d%3A0x6c1c5c5c5c5c5c5c!2s33%20Rue%20Moli%C3%A8re%2C%2069006%20Lyon%2C%20France!5e0!3m2!1sfr!2sfr!4v1703875200000!5m2!1sfr!2sfr"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      allowFullScreen
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      title="Le Ravito - 33 rue Molière, 69006 Lyon"
+                    />
+                  </div>
+                  <p className="text-sm text-custom-grey/60 mt-3 text-center">
+                    Accessible en métro ligne A (Foch) - Parking disponible rue Molière
+                  </p>
                 </div>
 
                 {/* Phone & Email */}
@@ -309,27 +324,7 @@ const ContactPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
-                <div className="bg-white p-6 rounded-xl shadow-md">
-                  <h3 className="font-semibold text-lg text-custom-grey mb-4">
-                    Nous Trouver
-                  </h3>
-                  <div className="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-                    <div className="text-center space-y-2">
-                      <MapPin size={48} className="text-accent-blue mx-auto" />
-                      <p className="text-custom-grey font-medium">Carte Interactive</p>
-                      <p className="text-sm text-custom-grey/60">
-                        33 rue Molière, 69006 Lyon
-                      </p>
-                      <button
-                        onClick={handleGetDirections}
-                        className="mt-2 px-4 py-2 bg-accent-blue text-white rounded-lg hover:bg-accent-orange transition-colors duration-200"
-                      >
-                        Voir sur Google Maps
-                      </button>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
           </div>
