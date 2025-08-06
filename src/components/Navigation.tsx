@@ -51,7 +51,7 @@ const Navigation: React.FC = () => {
         transition-all duration-300 ease-in-out
         ${isScrolled 
           ? 'bg-light-white/95 backdrop-blur-sm shadow-md' 
-          : 'bg-transparent'
+          : 'bg-light-white/80 backdrop-blur-sm'
         }
       `}
     >
@@ -94,14 +94,7 @@ const Navigation: React.FC = () => {
           <div className="md:hidden">
             <button
               onClick={handleToggleMenu}
-              className={`
-                p-2 rounded-md
-                transition-colors duration-200
-                ${isScrolled 
-                  ? 'text-custom-grey hover:text-accent-blue' 
-                  : 'text-light-white hover:text-accent-orange'
-                }
-              `}
+              className="p-2 rounded-md transition-colors duration-200 text-custom-grey hover:text-accent-blue"
               aria-label="Toggle navigation menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
