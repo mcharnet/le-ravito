@@ -1,104 +1,120 @@
-import React, { useState } from 'react'
-import { postContact } from '@/lib/services/forms'
-import Head from 'next/head'
-import { MapPin, Phone, Mail, Clock, Navigation as NavigationIcon, Send, MessageCircle } from 'lucide-react'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
+import React, { useState } from "react";
+import { postContact } from "@/lib/services/forms";
+import Head from "next/head";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Navigation as NavigationIcon,
+  Send,
+  MessageCircle,
+} from "lucide-react";
+import Navigation from "@/components/Navigation";
+import { CONTACT } from "@/utils/constants";
+import Footer from "@/components/Footer";
 
 interface ContactForm {
-  name: string
-  email: string
-  phone: string
-  subject: string
-  message: string
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
 }
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<ContactForm>({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
 
   const contactInfo = {
     address: {
-      street: '33 rue Molière',
-      city: 'Lyon',
-      postalCode: '69006',
-      country: 'France'
+      street: "33 rue Molière",
+      city: "Lyon",
+      postalCode: "69006",
+      country: "France",
     },
-    phone: '+33 1 23 45 67 89',
-    email: 'contact@leravito.fr',
+    phone: CONTACT.phoneDisplay,
+    email: CONTACT.email,
     openingHours: [
-      { day: 'Lundi - Vendredi', hours: '06:00 - 20:00' },
-      { day: 'Samedi', hours: '07:00 - 19:00' },
-      { day: 'Dimanche', hours: '08:00 - 18:00' },
-    ]
-  }
+      { day: "Lundi - Vendredi", hours: "11:30 - 14:30, 17:00 - 00:00" },
+    ],
+  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
-  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setSubmitError(null)
-    setSubmitSuccess(false)
-    setIsSubmitting(true)
+    e.preventDefault();
+    setSubmitError(null);
+    setSubmitSuccess(false);
+    setIsSubmitting(true);
     try {
-      await postContact(formData)
-      setSubmitSuccess(true)
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+      await postContact(formData);
+      setSubmitSuccess(true);
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Erreur inconnue'
-      setSubmitError(message)
+      const message = err instanceof Error ? err.message : "Erreur inconnue";
+      setSubmitError(message);
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleGetDirections = () => {
-    const address = encodeURIComponent(`${contactInfo.address.street}, ${contactInfo.address.postalCode} ${contactInfo.address.city}`)
-    window.open(`https://www.google.com/maps/search/?api=1&query=${address}`, '_blank')
-  }
+    const address = encodeURIComponent(
+      `${contactInfo.address.street}, ${contactInfo.address.postalCode} ${contactInfo.address.city}`,
+    );
+    window.open(
+      `https://www.google.com/maps/search/?api=1&query=${address}`,
+      "_blank",
+    );
+  };
 
   const subjects = [
-    'Question générale',
-    'Réservation / Événement',
-    'Partenariat',
-    'Suggestion / Réclamation',
-    'Presse / Média',
-    'Autre'
-  ]
+    "Question générale",
+    "Réservation / Événement",
+    "Partenariat",
+    "Suggestion / Réclamation",
+    "Presse / Média",
+    "Autre",
+  ];
 
   return (
     <>
       <Head>
         <title>Contact - Le Ravito | Nous contacter à Lyon 6ème</title>
-        <meta 
-          name="description" 
-          content="Contactez Le Ravito à Lyon 6ème. Adresse, téléphone, horaires et formulaire de contact. 33 rue Molière, 69006 Lyon." 
+        <meta
+          name="description"
+          content="Contactez Le Ravito à Lyon 6ème. Adresse, téléphone, horaires et formulaire de contact. 33 rue Molière, 69006 Lyon."
         />
-        <meta 
-          name="keywords" 
-          content="contact le ravito, adresse lyon 6, téléphone café sportif, horaires ouverture, nous contacter" 
+        <meta
+          name="keywords"
+          content="contact le ravito, adresse lyon 6, téléphone café sportif, horaires ouverture, nous contacter"
         />
         <link rel="canonical" href="https://leravito.fr/contact" />
       </Head>
 
       <div className="min-h-screen bg-light-white">
         <Navigation />
-        
+
         {/* Hero Section */}
         <section className="pt-20 pb-16 bg-gradient-to-br from-accent-blue/10 to-accent-orange/10">
           <div className="container-custom text-center">
@@ -109,7 +125,8 @@ const ContactPage: React.FC = () => {
               </h1>
               <div className="w-32 h-0.5 bg-accent-blue mx-auto" />
               <p className="text-lg md:text-xl text-custom-grey/70 leading-relaxed">
-                Une question, une suggestion, un projet ? Notre équipe est là pour vous accompagner.
+                Une question, une suggestion, un projet ? Notre équipe est là
+                pour vous accompagner.
               </p>
             </div>
           </div>
@@ -119,25 +136,31 @@ const ContactPage: React.FC = () => {
         <section className="section-padding">
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-              
               {/* Colonne de gauche */}
               <div className="space-y-8">
                 {/* Contact Form */}
                 <div className="bg-white rounded-xl shadow-lg p-8">
                   <div className="mb-8">
                     <h2 className="text-2xl font-bold text-custom-grey mb-4 flex items-center">
-                      <MessageCircle className="mr-3 text-accent-orange" size={28} />
+                      <MessageCircle
+                        className="mr-3 text-accent-orange"
+                        size={28}
+                      />
                       Envoyez-nous un message
                     </h2>
                     <p className="text-custom-grey/70">
-                      Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.
+                      Remplissez le formulaire ci-dessous et nous vous
+                      répondrons rapidement.
                     </p>
                   </div>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-custom-grey mb-2">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-custom-grey mb-2"
+                        >
                           Nom complet *
                         </label>
                         <input
@@ -151,9 +174,12 @@ const ContactPage: React.FC = () => {
                           placeholder="Votre nom"
                         />
                       </div>
-                      
+
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-custom-grey mb-2">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm font-medium text-custom-grey mb-2"
+                        >
                           Email *
                         </label>
                         <input
@@ -171,7 +197,10 @@ const ContactPage: React.FC = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-custom-grey mb-2">
+                        <label
+                          htmlFor="phone"
+                          className="block text-sm font-medium text-custom-grey mb-2"
+                        >
                           Téléphone
                         </label>
                         <input
@@ -186,7 +215,10 @@ const ContactPage: React.FC = () => {
                       </div>
 
                       <div>
-                        <label htmlFor="subject" className="block text-sm font-medium text-custom-grey mb-2">
+                        <label
+                          htmlFor="subject"
+                          className="block text-sm font-medium text-custom-grey mb-2"
+                        >
                           Sujet *
                         </label>
                         <select
@@ -198,15 +230,20 @@ const ContactPage: React.FC = () => {
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-blue focus:border-transparent transition-all duration-200"
                         >
                           <option value="">Sélectionner un sujet</option>
-                          {subjects.map(subject => (
-                            <option key={subject} value={subject}>{subject}</option>
+                          {subjects.map((subject) => (
+                            <option key={subject} value={subject}>
+                              {subject}
+                            </option>
                           ))}
                         </select>
                       </div>
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-custom-grey mb-2">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-custom-grey mb-2"
+                      >
                         Message *
                       </label>
                       <textarea
@@ -222,19 +259,23 @@ const ContactPage: React.FC = () => {
                     </div>
 
                     {submitError && (
-                      <p className="text-red-600 text-sm" role="alert">{submitError}</p>
+                      <p className="text-red-600 text-sm" role="alert">
+                        {submitError}
+                      </p>
                     )}
                     {submitSuccess && (
-                      <p className="text-green-700 text-sm" role="status">Message envoyé ✅</p>
+                      <p className="text-green-700 text-sm" role="status">
+                        Message envoyé ✅
+                      </p>
                     )}
                     <button
                       type="submit"
                       disabled={isSubmitting}
                       aria-busy={isSubmitting}
-                      className={`w-full px-6 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-xl'}`}
+                      className={`w-full px-6 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 flex items-center justify-center ${isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:scale-105 hover:shadow-xl"}`}
                     >
                       <Send size={20} className="mr-2" />
-                      {isSubmitting ? 'Envoi…' : 'Envoyer le message'}
+                      {isSubmitting ? "Envoi…" : "Envoyer le message"}
                     </button>
                   </form>
                 </div>
@@ -251,7 +292,7 @@ const ContactPage: React.FC = () => {
                       </div>
                       <div>
                         <p className="text-xs text-custom-grey/60">Téléphone</p>
-                        <a 
+                        <a
                           href={`tel:${contactInfo.phone}`}
                           className="text-custom-grey font-medium hover:text-accent-orange transition-colors duration-200"
                         >
@@ -259,14 +300,14 @@ const ContactPage: React.FC = () => {
                         </a>
                       </div>
                     </div>
-                    
+
                     <div className="flex items-center space-x-3">
                       <div className="p-2 bg-dark-green/10 rounded-lg flex-shrink-0">
                         <Mail className="text-dark-green" size={18} />
                       </div>
                       <div>
                         <p className="text-xs text-custom-grey/60">Email</p>
-                        <a 
+                        <a
                           href={`mailto:${contactInfo.email}`}
                           className="text-custom-grey font-medium hover:text-accent-orange transition-colors duration-200"
                         >
@@ -291,8 +332,11 @@ const ContactPage: React.FC = () => {
                         Nous Trouver
                       </h3>
                       <address className="text-custom-grey/70 not-italic leading-relaxed mb-4">
-                        {contactInfo.address.street}<br />
-                        {contactInfo.address.postalCode} {contactInfo.address.city}<br />
+                        {contactInfo.address.street}
+                        <br />
+                        {contactInfo.address.postalCode}{" "}
+                        {contactInfo.address.city}
+                        <br />
                         {contactInfo.address.country}
                       </address>
                       <button
@@ -317,7 +361,8 @@ const ContactPage: React.FC = () => {
                     />
                   </div>
                   <p className="text-sm text-custom-grey/60 mt-3 text-center">
-                    Accessible en métro ligne A (Foch) - Parking disponible rue Molière
+                    Accessible en métro ligne A (Foch) - Parking disponible rue
+                    Molière
                   </p>
                 </div>
 
@@ -333,7 +378,7 @@ const ContactPage: React.FC = () => {
                   </div>
                   <div className="space-y-3">
                     {contactInfo.openingHours.map((schedule, index) => (
-                      <div 
+                      <div
                         key={index}
                         className="flex justify-between items-center py-2 border-b border-gray-100 last:border-b-0"
                       >
@@ -347,8 +392,6 @@ const ContactPage: React.FC = () => {
                     ))}
                   </div>
                 </div>
-
-
               </div>
             </div>
           </div>
@@ -372,8 +415,9 @@ const ContactPage: React.FC = () => {
                   Puis-je réserver une table ?
                 </h3>
                 <p className="text-custom-grey/70">
-                  Oui, nous recommandons la réservation surtout le week-end. 
-                  Vous pouvez réserver via notre page dédiée ou nous appeler directement.
+                  Oui, nous recommandons la réservation surtout le week-end.
+                  Vous pouvez réserver via notre page dédiée ou nous appeler
+                  directement.
                 </p>
               </div>
 
@@ -382,8 +426,9 @@ const ContactPage: React.FC = () => {
                   Proposez-vous des options vegan ?
                 </h3>
                 <p className="text-custom-grey/70">
-                  Absolument ! Notre carte propose de nombreuses options végétariennes et vegan, 
-                  adaptées aux besoins de tous les sportifs.
+                  Absolument ! Notre carte propose de nombreuses options
+                  végétariennes et vegan, adaptées aux besoins de tous les
+                  sportifs.
                 </p>
               </div>
 
@@ -392,8 +437,9 @@ const ContactPage: React.FC = () => {
                   Y a-t-il un parking ?
                 </h3>
                 <p className="text-custom-grey/70">
-                  Des places de stationnement sont disponibles dans la rue Molière. 
-                  Nous sommes également accessibles en métro (ligne A - Foch).
+                  Des places de stationnement sont disponibles dans la rue
+                  Molière. Nous sommes également accessibles en métro (ligne A -
+                  Foch).
                 </p>
               </div>
 
@@ -402,7 +448,7 @@ const ContactPage: React.FC = () => {
                   Organisez-vous des événements privés ?
                 </h3>
                 <p className="text-custom-grey/70">
-                  Oui, nous pouvons organiser vos événements sportifs privés. 
+                  Oui, nous pouvons organiser vos événements sportifs privés.
                   Contactez-nous pour discuter de vos besoins spécifiques.
                 </p>
               </div>
@@ -413,7 +459,7 @@ const ContactPage: React.FC = () => {
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default ContactPage
+export default ContactPage;

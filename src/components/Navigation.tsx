@@ -1,57 +1,58 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
-import Logo from './Logo'
-import type { NavigationItem } from '@/types'
+import type { NavigationItem } from "@/types";
+import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 const navigationItems: NavigationItem[] = [
-  { label: 'Accueil', href: '/' },
-  { label: 'Menu', href: '/menu' },
-  { label: 'Événements', href: '/events' },
-  { label: 'Notre Histoire', href: '/notre-histoire' },
-  { label: 'Contact', href: '/contact' },
-  { label: 'Réserver', href: '/reserver' },
-]
+  { label: "Accueil", href: "/" },
+  { label: "Menu", href: "/menu" },
+  { label: "Événements", href: "/events" },
+  { label: "Le concept", href: "/concept" },
+  { label: "Contact", href: "/contact" },
+  { label: "Réserver", href: "/reserver" },
+];
 
 const Navigation: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-    }
+      setIsScrolled(window.scrollY > 50);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleLinkClick = (href: string) => {
-    setIsOpen(false)
-    
+    setIsOpen(false);
+
     // Handle smooth scroll for anchor links
-    if (href.startsWith('#')) {
-      const element = document.querySelector(href)
+    if (href.startsWith("#")) {
+      const element = document.querySelector(href);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }
+  };
 
   const handleToggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <nav 
+    <nav
       className={`
         fixed top-0 left-0 right-0 z-50 
         transition-all duration-300 ease-in-out
-        ${isScrolled 
-          ? 'bg-light-white/95 backdrop-blur-sm shadow-md' 
-          : 'bg-light-white/80 backdrop-blur-sm'
+        ${
+          isScrolled
+            ? "bg-light-white/95 backdrop-blur-sm shadow-md"
+            : "bg-light-white/80 backdrop-blur-sm"
         }
       `}
     >
@@ -103,14 +104,14 @@ const Navigation: React.FC = () => {
         </div>
 
         {/* Mobile Navigation */}
-        <div 
+        <div
           className={`
             md:hidden 
             overflow-hidden 
             transition-all 
             duration-300 
             ease-in-out
-            ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
+            ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}
           `}
         >
           <div className="px-2 pt-2 pb-3 space-y-1 bg-light-white/95 backdrop-blur-sm rounded-lg mt-2">
@@ -133,7 +134,7 @@ const Navigation: React.FC = () => {
         </div>
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

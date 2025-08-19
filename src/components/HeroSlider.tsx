@@ -1,74 +1,75 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { HERO_IMAGES } from '@/utils/images'
+import { HERO_IMAGES } from "@/utils/images";
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 interface HeroSlide {
-  id: number
-  image: string
-  title: string
-  subtitle: string
+  id: number;
+  image: string;
+  title: string;
+  subtitle: string;
   ctaPrimary: {
-    text: string
-    href: string
-  }
+    text: string;
+    href: string;
+  };
   ctaSecondary: {
-    text: string
-    href: string
-  }
+    text: string;
+    href: string;
+  };
 }
 
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
     image: HERO_IMAGES.slide1,
-    title: 'Bienvenue au Ravito',
-    subtitle: 'Votre café bar dédié aux sportifs au cœur de Lyon',
+    title: "Bienvenue au Ravito",
+    subtitle: "Votre café-bar unique à Lyon dédié pour les coureurs",
     ctaPrimary: {
-      text: 'Découvrir la carte',
-      href: '/menu'
+      text: "Découvrir la carte",
+      href: "/menu",
     },
     ctaSecondary: {
-      text: 'Réserver une table',
-      href: '/reserver'
-    }
+      text: "Click & Collect",
+      href: "/reserver",
+    },
   },
   {
     id: 2,
     image: HERO_IMAGES.slide2,
-    title: 'Ravitaillement & Convivialité',
-    subtitle: 'Des produits sains pour accompagner vos performances',
+    title: "Ravitaillement Local & Convivial",
+    subtitle: "Des produits sains pour accompagner vos performances",
     ctaPrimary: {
-      text: 'Voir les événements',
-      href: '/events'
+      text: "Réserver une table",
+      href: "/reserver",
     },
     ctaSecondary: {
-      text: 'Click & Collect',
-      href: '/reserver'
-    }
-  }
-]
+      text: "Voir les événements",
+      href: "/events",
+    },
+  },
+];
 
 const HeroSlider: React.FC = () => {
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const duration = 10000;
 
   useEffect(() => {
-    setIsLoaded(true)
+    setIsLoaded(true);
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    }, duration);
 
-    return () => clearInterval(interval)
-  }, [])
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSlideChange = (index: number) => {
-    setCurrentSlide(index)
-  }
+    setCurrentSlide(index);
+  };
 
-  const currentSlideData = heroSlides[currentSlide]
+  const currentSlideData = heroSlides[currentSlide];
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
@@ -82,10 +83,10 @@ const HeroSlider: React.FC = () => {
           priority
           className={`
             object-cover transition-all duration-1000 ease-in-out
-            ${isLoaded ? 'scale-100 opacity-100' : 'scale-105 opacity-0'}
+            ${isLoaded ? "scale-100 opacity-100" : "scale-105 opacity-0"}
           `}
         />
-        
+
         {/* Overlay Gradient */}
         <div className="absolute inset-0 overlay-gradient" />
       </div>
@@ -93,28 +94,28 @@ const HeroSlider: React.FC = () => {
       {/* Content */}
       <div className="relative z-10 h-full flex items-center justify-center">
         <div className="container-custom text-center text-light-white">
-          <div 
+          <div
             className={`
               space-y-6 transition-all duration-1000 ease-in-out
-              ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}
+              ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}
             `}
           >
             {/* Title */}
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-shadow">
               {currentSlideData.title}
             </h1>
-            
+
             {/* Subtitle */}
             <p className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto text-shadow font-medium">
               {currentSlideData.subtitle}
             </p>
-            
+
             {/* CTA Buttons */}
-            <div 
+            <div
               className={`
                 flex flex-col sm:flex-row gap-4 justify-center items-center pt-8
                 transition-all duration-1000 ease-in-out delay-300
-                ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}
+                ${isLoaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}
               `}
             >
               <Link
@@ -128,7 +129,7 @@ const HeroSlider: React.FC = () => {
               >
                 {currentSlideData.ctaPrimary.text}
               </Link>
-              
+
               <Link
                 href={currentSlideData.ctaSecondary.href}
                 className={`
@@ -154,9 +155,10 @@ const HeroSlider: React.FC = () => {
               onClick={() => handleSlideChange(index)}
               className={`
                 w-3 h-3 rounded-full transition-all duration-300
-                ${currentSlide === index 
-                  ? 'bg-accent-orange scale-125' 
-                  : 'bg-light-white/50 hover:bg-light-white/75'
+                ${
+                  currentSlide === index
+                    ? "bg-accent-orange scale-125"
+                    : "bg-light-white/50 hover:bg-light-white/75"
                 }
               `}
               aria-label={`Aller au slide ${index + 1}`}
@@ -172,7 +174,7 @@ const HeroSlider: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HeroSlider
+export default HeroSlider;
