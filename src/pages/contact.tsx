@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { postContact } from '@/lib/services/forms'
 import Head from 'next/head'
 import { MapPin, Phone, Mail, Clock, Navigation as NavigationIcon, Send, MessageCircle } from 'lucide-react'
 import Navigation from '@/components/Navigation'
@@ -45,18 +46,25 @@ const ContactPage: React.FC = () => {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the data to your backend
-    console.log('Contact form data:', formData)
-    alert('Merci pour votre message ! Nous vous répondrons dans les plus brefs délais.')
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      subject: '',
-      message: ''
-    })
+    setSubmitError(null)
+    setSubmitSuccess(false)
+    setIsSubmitting(true)
+    try {
+      await postContact(formData)
+      setSubmitSuccess(true)
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erreur inconnue'
+      setSubmitError(message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleGetDirections = () => {
@@ -213,12 +221,20 @@ const ContactPage: React.FC = () => {
                       />
                     </div>
 
+                    {submitError && (
+                      <p className="text-red-600 text-sm" role="alert">{submitError}</p>
+                    )}
+                    {submitSuccess && (
+                      <p className="text-green-700 text-sm" role="status">Message envoyé ✅</p>
+                    )}
                     <button
                       type="submit"
-                      className="w-full px-6 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-accent-orange/50 flex items-center justify-center"
+                      disabled={isSubmitting}
+                      aria-busy={isSubmitting}
+                      className={`w-full px-6 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 flex items-center justify-center ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-xl'}`}
                     >
                       <Send size={20} className="mr-2" />
-                      Envoyer le message
+                      {isSubmitting ? 'Envoi…' : 'Envoyer le message'}
                     </button>
                   </form>
                 </div>

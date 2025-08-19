@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Calendar, Users, Clock, ShoppingBag, CheckCircle, Info } from 'lucide-react'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+import { postReservation } from '@/lib/services/forms'
 
 interface ReservationForm {
   name: string
@@ -42,11 +43,28 @@ const ReserverPage: React.FC = () => {
     setFormData(prev => ({ ...prev, type: tab }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the data to your backend
-    console.log('Reservation data:', formData)
-    alert('Merci pour votre réservation ! Nous vous contacterons bientôt pour confirmer.')
+    setSubmitError(null)
+    setSubmitSuccess(false)
+    setIsSubmitting(true)
+    try {
+      await postReservation(formData)
+      setSubmitSuccess(true)
+      // garder les valeurs si click-collect, sinon reset
+      if (formData.type !== 'click-collect') {
+        setFormData(prev => ({ ...prev, date: '', time: '', message: '' }))
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Erreur inconnue'
+      setSubmitError(message)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const timeSlots = [
@@ -353,14 +371,26 @@ const ReserverPage: React.FC = () => {
 
                       {/* Submit Button */}
                       <div className="pt-4">
+                        {submitError && (
+                          <p className="text-red-600 text-sm mb-3" role="alert">{submitError}</p>
+                        )}
+                        {submitSuccess && (
+                          <p className="text-green-700 text-sm mb-3" role="status">Demande envoyée ✅</p>
+                        )}
                         <button
                           type="submit"
-                          className="w-full px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-accent-orange/50"
+                          disabled={isSubmitting}
+                          aria-busy={isSubmitting}
+                          className={`w-full px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-accent-orange/50 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : 'hover:scale-105 hover:shadow-xl'}`}
                         >
                           <CheckCircle size={20} className="inline mr-2" />
-                          {activeTab === 'table' && 'Réserver ma table'}
-                          {activeTab === 'event' && 'M\'inscrire à l\'événement'}
-                          {activeTab === 'click-collect' && 'Passer ma commande'}
+                          {isSubmitting
+                            ? 'Envoi…'
+                            : (
+                              activeTab === 'table' ? 'Réserver ma table'
+                              : activeTab === 'event' ? 'M\'inscrire à l\'événement'
+                              : 'Passer ma commande'
+                            )}
                         </button>
                       </div>
                     </form>

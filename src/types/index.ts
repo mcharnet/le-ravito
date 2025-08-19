@@ -36,3 +36,26 @@ export interface NavigationItem {
   href: string
   isExternal?: boolean
 }
+
+// Email & formulaires
+export interface ContactFormPayload {
+  name: string
+  email: string
+  phone?: string
+  subject: string
+  message: string
+}
+
+export type ReservationType = 'table' | 'event' | 'click-collect'
+
+export interface ReservationFormPayload {
+  name: string
+  email: string
+  phone?: string
+  date?: string
+  time?: string
+  guests?: number
+  type: ReservationType
+  message?: string
+  eventId?: string
+}
