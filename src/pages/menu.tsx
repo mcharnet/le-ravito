@@ -1,29 +1,29 @@
-import React, { useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
-import Navigation from '@/components/Navigation'
-import Footer from '@/components/Footer'
-import { Filter, ShoppingCart } from 'lucide-react'
-import type { MenuItem } from '@/types'
-import type { GetStaticProps } from 'next'
-import { getMenuItems, getCategories } from '@/sanity/lib/api'
-import { adaptMenuItem } from '@/sanity/lib/adapters'
+import Footer from "@/components/Footer";
+import Navigation from "@/components/Navigation";
+import { adaptMenuItem } from "@/sanity/lib/adapters";
+import { getCategories, getMenuItems } from "@/sanity/lib/api";
+import type { MenuItem } from "@/types";
+import { Filter, ShoppingCart } from "lucide-react";
+import type { GetStaticProps } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import React, { useState } from "react";
 
 // Les données sont maintenant récupérées via getStaticProps depuis Sanity
 
 const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
   const handleOrder = () => {
     // Here you would add the item to cart or redirect to ordering system
-    alert(`${item.name} ajouté au panier !`)
-  }
+    alert(`${item.name} ajouté au panier !`);
+  };
 
   return (
-    <div 
+    <div
       className={`
         bg-white rounded-xl shadow-md overflow-hidden
         transition-all duration-300 ease-in-out
         hover:scale-105 hover:shadow-xl
-        ${!item.isAvailable ? 'opacity-75' : ''}
+        ${!item.isAvailable ? "opacity-75" : ""}
       `}
     >
       {/* Image */}
@@ -39,14 +39,14 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
             hover:scale-110
           `}
         />
-        
+
         {/* Tag Badge */}
         {item.tag && (
           <div className="absolute top-4 left-4 bg-accent-orange text-white px-3 py-1 rounded-full text-sm font-medium">
             {item.tag}
           </div>
         )}
-        
+
         {/* Availability Badge */}
         {!item.isAvailable && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
@@ -73,15 +73,16 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
           <div className="text-2xl font-bold text-accent-orange">
             {item.price.toFixed(2)}€
           </div>
-          
+
           <button
             onClick={handleOrder}
             disabled={!item.isAvailable}
             className={`
               px-6 py-2 rounded-lg font-semibold transition-all duration-300
-              ${item.isAvailable
-                ? 'bg-accent-blue text-white hover:bg-accent-orange hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-accent-blue/50'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              ${
+                item.isAvailable
+                  ? "bg-accent-blue text-white hover:bg-accent-orange hover:shadow-lg hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-accent-blue/50"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed"
               }
               disabled:hover:transform-none disabled:hover:shadow-none
             `}
@@ -92,45 +93,47 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface MenuPageProps {
-	menuItems: MenuItem[]
-	categories: Array<{ id: string; label: string; count: number }>
+  menuItems: MenuItem[];
+  categories: Array<{ id: string; label: string; count: number }>;
 }
 
 const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
-  const [filteredItems, setFilteredItems] = useState<MenuItem[]>(menuItems)
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [filteredItems, setFilteredItems] = useState<MenuItem[]>(menuItems);
 
   const handleCategoryChange = (categoryId: string) => {
-    setSelectedCategory(categoryId)
-    if (categoryId === 'all') {
-      setFilteredItems(menuItems)
+    setSelectedCategory(categoryId);
+    if (categoryId === "all") {
+      setFilteredItems(menuItems);
     } else {
-      setFilteredItems(menuItems.filter(item => item.category === categoryId))
+      setFilteredItems(
+        menuItems.filter((item) => item.category === categoryId),
+      );
     }
-  }
+  };
 
   return (
     <>
       <Head>
         <title>Menu - Le Ravito | Produits Sains pour Sportifs à Lyon</title>
-        <meta 
-          name="description" 
-          content="Découvrez notre menu spécialement conçu pour les sportifs : smoothies énergisants, plats équilibrés, snacks sains. Produits locaux et bio à Lyon 6ème." 
+        <meta
+          name="description"
+          content="Découvrez notre menu spécialement conçu pour les sportifs : smoothies énergisants, plats équilibrés, snacks sains. Produits locaux et bio à Lyon 6ème."
         />
-        <meta 
-          name="keywords" 
-          content="menu sportif lyon, nutrition sport, smoothie bowl, quinoa, produits bio lyon, collation sportive" 
+        <meta
+          name="keywords"
+          content="menu sportif lyon, nutrition sport, smoothie bowl, quinoa, produits bio lyon, collation sportive"
         />
         <link rel="canonical" href="https://leravito.fr/menu" />
       </Head>
 
       <div className="min-h-screen bg-light-white">
         <Navigation />
-        
+
         {/* Hero Section */}
         <section className="pt-20 pb-16 bg-gradient-to-br from-accent-blue/10 to-accent-orange/10">
           <div className="container-custom text-center">
@@ -141,8 +144,9 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
               </h1>
               <div className="w-32 h-0.5 bg-accent-blue mx-auto" />
               <p className="text-lg md:text-xl text-custom-grey/70 leading-relaxed">
-                Des produits sains, locaux et adaptés aux besoins des sportifs. 
-                Chaque plat est pensé pour vous accompagner dans vos performances.
+                Des produits sains, locaux et adaptés aux besoins des sportifs.
+                Chaque plat est pensé pour vous accompagner dans vos
+                performances et votre récupération.
               </p>
             </div>
           </div>
@@ -156,16 +160,17 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
                 <Filter size={20} />
                 <span className="font-medium">Filtrer :</span>
               </div>
-              
+
               {categories.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => handleCategoryChange(category.id)}
                   className={`
                     px-6 py-2 rounded-full font-medium transition-all duration-200
-                    ${selectedCategory === category.id
-                      ? 'bg-accent-blue text-white shadow-md'
-                      : 'bg-gray-100 text-custom-grey hover:bg-accent-blue/10 hover:text-accent-blue'
+                    ${
+                      selectedCategory === category.id
+                        ? "bg-accent-blue text-white shadow-md"
+                        : "bg-gray-100 text-custom-grey hover:bg-accent-blue/10 hover:text-accent-blue"
                     }
                   `}
                 >
@@ -203,10 +208,11 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
                 Commande et Livraison
               </h2>
               <p className="text-custom-grey/70 mb-8 max-w-2xl mx-auto">
-                Commandez en ligne et récupérez vos produits à l'heure souhaitée, 
-                ou profitez de notre service de livraison dans Lyon 6ème.
+                Commandez en ligne et récupérez vos produits à l'heure
+                souhaitée, ou profitez de notre service de livraison dans Lyon
+                6ème.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button className="px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl">
                   Commander en ligne
@@ -215,19 +221,29 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
                   Click & Collect
                 </button>
               </div>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-sm">
                 <div className="space-y-2">
-                  <div className="font-semibold text-accent-blue">Click & Collect</div>
-                  <div className="text-custom-grey/70">Commandez et récupérez sur place</div>
+                  <div className="font-semibold text-accent-blue">
+                    Click & Collect
+                  </div>
+                  <div className="text-custom-grey/70">
+                    Commandez et récupérez sur place
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="font-semibold text-accent-orange">Livraison</div>
-                  <div className="text-custom-grey/70">Dans Lyon 6ème sous 30min</div>
+                  <div className="font-semibold text-accent-orange">
+                    Livraison
+                  </div>
+                  <div className="text-custom-grey/70">
+                    Dans Lyon 6ème sous 30min
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <div className="font-semibold text-dark-green">Sur place</div>
-                  <div className="text-custom-grey/70">Service à table avec le sourire</div>
+                  <div className="text-custom-grey/70">
+                    Service à table avec le sourire
+                  </div>
                 </div>
               </div>
             </div>
@@ -237,58 +253,59 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
         <Footer />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default MenuPage
+export default MenuPage;
 
 // Récupération des données depuis Sanity au build time
 export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
-	try {
-		// Récupérer les données depuis Sanity
-		const [sanityMenuItems, sanityCategories] = await Promise.all([
-			getMenuItems(),
-			getCategories()
-		])
+  try {
+    // Récupérer les données depuis Sanity
+    const [sanityMenuItems, sanityCategories] = await Promise.all([
+      getMenuItems(),
+      getCategories(),
+    ]);
 
-		// Adapter les données Sanity vers les types de l'application
-		const menuItems = sanityMenuItems.map(adaptMenuItem)
+    // Adapter les données Sanity vers les types de l'application
+    const menuItems = sanityMenuItems.map(adaptMenuItem);
 
-		// Créer les catégories dynamiquement depuis Sanity
-		const categories = [
-			{ id: 'all', label: 'Tout', count: menuItems.length }
-		]
+    // Créer les catégories dynamiquement depuis Sanity
+    const categories = [{ id: "all", label: "Tout", count: menuItems.length }];
 
-		// Ajouter les catégories Sanity avec leurs compteurs
-		sanityCategories.forEach(sanityCategory => {
-			const count = menuItems.filter(item => item.category === sanityCategory.name).length
-			if (count > 0) { // Seulement ajouter les catégories qui ont des items
-				categories.push({
-					id: sanityCategory.name,
-					label: sanityCategory.name,
-					count
-				})
-			}
-		})
+    // Ajouter les catégories Sanity avec leurs compteurs
+    sanityCategories.forEach((sanityCategory) => {
+      const count = menuItems.filter(
+        (item) => item.category === sanityCategory.name,
+      ).length;
+      if (count > 0) {
+        // Seulement ajouter les catégories qui ont des items
+        categories.push({
+          id: sanityCategory.name,
+          label: sanityCategory.name,
+          count,
+        });
+      }
+    });
 
-		return {
-			props: {
-				menuItems,
-				categories,
-			},
-			// Revalider la page toutes les 5 minutes
-			revalidate: 300,
-		}
-	} catch (error) {
-		console.error('Erreur lors de la récupération des données du menu:', error)
-		
-		// Retourner des données vides en cas d'erreur
-		return {
-			props: {
-				menuItems: [],
-				categories: [{ id: 'all', label: 'Tout', count: 0 }],
-			},
-			revalidate: 60, // Retry plus fréquemment en cas d'erreur
-		}
-	}
-}
+    return {
+      props: {
+        menuItems,
+        categories,
+      },
+      // Revalider la page toutes les 5 minutes
+      revalidate: 300,
+    };
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données du menu:", error);
+
+    // Retourner des données vides en cas d'erreur
+    return {
+      props: {
+        menuItems: [],
+        categories: [{ id: "all", label: "Tout", count: 0 }],
+      },
+      revalidate: 60, // Retry plus fréquemment en cas d'erreur
+    };
+  }
+};
