@@ -10,7 +10,7 @@ export const categoriesQuery = `
 `;
 
 export const menuItemsQuery = `
-  *[_type == "menuItem"] | order(category->order, name) {
+  *[_type == "menuItem"] | order(category->order, subcategory, name) {
     _id,
     name,
     description,
@@ -20,6 +20,7 @@ export const menuItemsQuery = `
     isVegetarian,
     isVegan,
     isAvailable,
+    subcategory,
     category-> {
       _id,
       name,

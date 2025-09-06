@@ -27,6 +27,7 @@ export interface SanityMenuItem {
   isVegan: boolean;
   isAvailable: boolean;
   category: SanityCategory;
+  subcategory?: string;
 }
 
 export interface SanityEventCategory {

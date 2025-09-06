@@ -214,10 +214,86 @@ const MenuPage: React.FC<MenuPageProps> = ({
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {filteredItems.map((item) => (
-                  <MenuItemCard key={item.id} item={item} />
-                ))}
+              <div className="space-y-16">
+                {(() => {
+                  // Grouper les éléments par catégorie puis par sous-catégorie
+                  const groupedItems = filteredItems.reduce(
+                    (groups, item) => {
+                      const category = item.category || "Autres";
+                      const subcategory = item.subcategory || "Autres";
+
+                      if (!groups[category]) {
+                        groups[category] = {};
+                      }
+                      if (!groups[category][subcategory]) {
+                        groups[category][subcategory] = [];
+                      }
+                      groups[category][subcategory].push(item);
+                      return groups;
+                    },
+                    {} as Record<string, Record<string, MenuItem[]>>,
+                  );
+
+                  // Ordre prédéfini des catégories
+                  const categoryOrder = ["Plats", "Desserts", "Boissons"];
+
+                  // Fonction pour obtenir l'ordre d'une catégorie
+                  const getCategoryOrder = (category: string) => {
+                    const index = categoryOrder.findIndex(
+                      (c) => c.toLowerCase() === category.toLowerCase(),
+                    );
+                    return index !== -1 ? index : 999; // Les autres catégories à la fin
+                  };
+
+                  return Object.entries(groupedItems)
+                    .sort(
+                      ([a], [b]) => getCategoryOrder(a) - getCategoryOrder(b),
+                    )
+                    .map(([category, subcategories]) => (
+                      <div key={category} className="space-y-8">
+                        {/* Titre de catégorie */}
+                        {category !== "Autres" && (
+                          <div className="text-center">
+                            <h2 className="text-3xl font-bold text-custom-grey mb-3">
+                              {category
+                                .replace(/-/g, " ")
+                                .replace(/\b\w/g, (l) => l.toUpperCase())}
+                            </h2>
+                            <div className="w-20 h-0.5 bg-accent-orange mx-auto"></div>
+                          </div>
+                        )}
+
+                        {/* Sous-catégories */}
+                        {Object.entries(subcategories).map(
+                          ([subcategory, items]) => (
+                            <div
+                              key={`${category}-${subcategory}`}
+                              className="space-y-6"
+                            >
+                              {/* Titre de sous-catégorie */}
+                              {subcategory !== "Autres" && (
+                                <div className="text-center">
+                                  <h3 className="text-xl font-semibold text-custom-grey mb-2">
+                                    {subcategory
+                                      .replace(/-/g, " ")
+                                      .replace(/\b\w/g, (l) => l.toUpperCase())}
+                                  </h3>
+                                  <div className="w-12 h-0.5 bg-accent-blue mx-auto"></div>
+                                </div>
+                              )}
+
+                              {/* Grille des éléments */}
+                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {items.map((item) => (
+                                  <MenuItemCard key={item.id} item={item} />
+                                ))}
+                              </div>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    ));
+                })()}
               </div>
             )}
           </div>
@@ -358,7 +434,7 @@ export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
       revalidate: 300,
     };
   } catch (error) {
-    console.error("Erreur lors de la récupération des données du menu:", error);
+    // En cas d'erreur, on retourne des données vides
 
     // Retourner des données vides en cas d'erreur
     return {
