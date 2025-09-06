@@ -1,9 +1,9 @@
 import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import { adaptMenuItem } from "@/sanity/lib/adapters";
-import { getCategories, getMenuItems } from "@/sanity/lib/api";
+import { getCategories, getMenuItems, getActiveMenu } from "@/sanity/lib/api";
 import type { MenuItem } from "@/types";
-import { Filter, ShoppingCart } from "lucide-react";
+import { Filter, ShoppingCart, Eye, X } from "lucide-react";
 import type { GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -99,11 +99,21 @@ const MenuItemCard: React.FC<{ item: MenuItem }> = ({ item }) => {
 interface MenuPageProps {
   menuItems: MenuItem[];
   categories: Array<{ id: string; label: string; count: number }>;
+  activeMenu: {
+    title: string;
+    description?: string;
+    menuImage?: string;
+  } | null;
 }
 
-const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
+const MenuPage: React.FC<MenuPageProps> = ({
+  menuItems,
+  categories,
+  activeMenu,
+}) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [filteredItems, setFilteredItems] = useState<MenuItem[]>(menuItems);
+  const [isMenuModalOpen, setIsMenuModalOpen] = useState<boolean>(false);
 
   const handleCategoryChange = (categoryId: string) => {
     setSelectedCategory(categoryId);
@@ -149,6 +159,19 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
                 performances et votre récupération.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Menu Button Section */}
+        <section className="py-8 bg-white">
+          <div className="container-custom text-center">
+            <button
+              onClick={() => setIsMenuModalOpen(true)}
+              className="inline-flex items-center px-8 py-4 bg-accent-orange text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-accent-orange/50"
+            >
+              <Eye size={20} className="mr-2" />
+              Voir le menu complet
+            </button>
           </div>
         </section>
 
@@ -251,6 +274,36 @@ const MenuPage: React.FC<MenuPageProps> = ({ menuItems, categories }) => {
         </section>
 
         <Footer />
+
+        {/* Menu Modal */}
+        {isMenuModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
+            <div className="relative bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col w-auto h-auto">
+              {/* Modal Header */}
+              <div className="absolute top-2 right-2 z-10">
+                <button
+                  onClick={() => setIsMenuModalOpen(false)}
+                  className="p-2 text-custom-grey hover:text-accent-orange transition-colors duration-200 bg-white/90 rounded-full"
+                  aria-label="Fermer le menu"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="relative">
+                <Image
+                  src={activeMenu?.menuImage || "/images/menu/menu.png"}
+                  alt={activeMenu?.title || "Menu du Ravito"}
+                  width={800}
+                  height={600}
+                  className="max-w-[95vw] max-h-[95vh] object-contain"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
@@ -262,10 +315,8 @@ export default MenuPage;
 export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
   try {
     // Récupérer les données depuis Sanity
-    const [sanityMenuItems, sanityCategories] = await Promise.all([
-      getMenuItems(),
-      getCategories(),
-    ]);
+    const [sanityMenuItems, sanityCategories, sanityActiveMenu] =
+      await Promise.all([getMenuItems(), getCategories(), getActiveMenu()]);
 
     // Adapter les données Sanity vers les types de l'application
     const menuItems = sanityMenuItems.map(adaptMenuItem);
@@ -288,10 +339,20 @@ export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
       }
     });
 
+    // Adapter le menu actif
+    const activeMenu = sanityActiveMenu
+      ? {
+          title: sanityActiveMenu.title,
+          description: sanityActiveMenu.description,
+          menuImage: sanityActiveMenu.menuImage?.asset?.url || null,
+        }
+      : null;
+
     return {
       props: {
         menuItems,
         categories,
+        activeMenu,
       },
       // Revalider la page toutes les 5 minutes
       revalidate: 300,
@@ -304,6 +365,7 @@ export const getStaticProps: GetStaticProps<MenuPageProps> = async () => {
       props: {
         menuItems: [],
         categories: [{ id: "all", label: "Tout", count: 0 }],
+        activeMenu: null,
       },
       revalidate: 60, // Retry plus fréquemment en cas d'erreur
     };

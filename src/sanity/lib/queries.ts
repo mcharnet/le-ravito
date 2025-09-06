@@ -7,7 +7,7 @@ export const categoriesQuery = `
     description,
     order
   }
-`
+`;
 
 export const menuItemsQuery = `
   *[_type == "menuItem"] | order(category->order, name) {
@@ -27,7 +27,7 @@ export const menuItemsQuery = `
       order
     }
   }
-`
+`;
 
 export const eventsQuery = `
   *[_type == "event" && isActive == true && startDate >= now()] | order(startDate) {
@@ -44,7 +44,7 @@ export const eventsQuery = `
       order
     }
   }
-`
+`;
 
 export const upcomingEventsQuery = `
   *[_type == "event" && isActive == true && startDate >= now()] | order(startDate) [0...3] {
@@ -57,7 +57,7 @@ export const upcomingEventsQuery = `
       name
     }
   }
-`
+`;
 
 export const eventCategoriesQuery = `
   *[_type == "eventCategory"] | order(order) {
@@ -66,4 +66,14 @@ export const eventCategoriesQuery = `
     description,
     order
   }
-`
+`;
+
+export const activeMenuQuery = `
+  *[_type == "menu" && isActive == true] [0] {
+    _id,
+    title,
+    description,
+    menuImage,
+    isActive
+  }
+`;

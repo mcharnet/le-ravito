@@ -1,11 +1,13 @@
-import { menuItemType } from './menuItemType'
-import { eventType } from './eventType'
-import { categoryType } from './categoryType'
-import { eventCategoryType } from './eventCategoryType'
+import { menuItemType } from "./menuItemType";
+import { menuType } from "./menuType";
+import { eventType } from "./eventType";
+import { categoryType } from "./categoryType";
+import { eventCategoryType } from "./eventCategoryType";
 
 export const schemaTypes = [
-	menuItemType,
-	eventType, 
-	categoryType,
-	eventCategoryType
-]
+  menuItemType,
+  menuType,
+  eventType,
+  categoryType,
+  eventCategoryType,
+];
